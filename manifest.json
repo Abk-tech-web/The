@@ -1,0 +1,27 @@
+{
+  "name": "The Little Elon ($INVENTO)",
+  "short_name": "$INVENTO",
+  "description": "Innovation is the real currency. Live token dashboard, real supply, no promises without proof.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0A0A0F",
+  "theme_color": "#0A0A0F",
+  "lang": "en",
+  "categories": ["finance", "cryptocurrency"],
+  "icons": [
+    {
+      "src": "assets/icons/favicon.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo/invento-mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

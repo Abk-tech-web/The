@@ -1,0 +1,8 @@
+# $INVENTO — The Little Elon
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Replace with your live domain once deployed (GitHub Pages / Vercel / custom domain)
+Sitemap: https://www.thelittleelon.com/sitemap.xml
