@@ -32,9 +32,8 @@ const CONFIG = {
   // ---------------------------------------------------------------------
   SOCIALS: {
     TELEGRAM: "https://t.me/TheLittleElon",
-    // Placeholder — swap in the real profile URL when available.
-    // Until then the X icon renders but links nowhere (handled in app.js).
-    X: "",
+    // Real profile URL now set — the X icon becomes a live link (app.js).
+    X: "https://x.com/inventorkhalifa",
     // Optional extras — leave blank to auto-hide the icon in the navbar/footer
     DISCORD: "",
     WEBSITE: ""
