@@ -1,0 +1,302 @@
+/* =====================================================================
+   $INVENTO — The Little Elon
+   animations.css — Keyframes, entrance transitions & micro-interactions
+   Base tokens/durations live in style.css; breakpoints in responsive.css.
+   This file owns: @keyframes, the [data-animate]/[data-hero-in] fallback
+   transition (used when GSAP isn't loaded — app.js's IntersectionObserver
+   path adds .is-visible directly), and idle/ambient motion (glow pulses,
+   ticker dot, loader bar, floating icons).
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   1. KEYFRAMES
+   --------------------------------------------------------------------- */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px var(--glow); opacity: 1; }
+  50%      { box-shadow: 0 0 20px var(--glow); opacity: 0.7; }
+}
+
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45); }
+  70%  { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes loader-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(340%); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes flash-value {
+  0%   { color: var(--primary-light); }
+  100% { color: inherit; }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.08; }
+  50%      { opacity: 0.14; }
+}
+
+@keyframes scroll-cue-move {
+  0%   { transform: translateY(0); opacity: 1; }
+  80%  { opacity: 0; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+/* ---------------------------------------------------------------------
+   2. SCROLL / ENTRANCE REVEAL
+   (CSS fallback path only — used when GSAP isn't present and app.js's
+   IntersectionObserver adds .is-visible; GSAP path animates inline via
+   autoAlpha/y and ignores these transitions harmlessly)
+   --------------------------------------------------------------------- */
+[data-animate] {
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transform: translateY(28px);
+}
+
+[data-animate].is-visible {
+  transform: translateY(0);
+}
+
+[data-hero-in] {
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  transform: translateY(20px);
+}
+
+[data-hero-in].is-visible {
+  transform: translateY(0);
+}
+
+/* Stagger children of the hero content slightly for the CSS fallback */
+[data-hero-in]:nth-of-type(2) { transition-delay: 0.06s; }
+[data-hero-in]:nth-of-type(3) { transition-delay: 0.12s; }
+[data-hero-in]:nth-of-type(4) { transition-delay: 0.18s; }
+[data-hero-in]:nth-of-type(5) { transition-delay: 0.24s; }
+
+/* ---------------------------------------------------------------------
+   3. LOADER
+   --------------------------------------------------------------------- */
+.loader__mark {
+  animation: pulse-glow 2.2s ease-in-out infinite;
+}
+
+.loader__bar {
+  position: relative;
+}
+
+.loader__bar span {
+  position: relative;
+  overflow: hidden;
+}
+
+.loader__bar span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  animation: loader-sweep 1.3s ease-in-out infinite;
+}
+
+.loader__label {
+  animation: fade-in 0.6s var(--ease-out) both;
+}
+
+/* ---------------------------------------------------------------------
+   4. NAVBAR
+   --------------------------------------------------------------------- */
+.navbar {
+  animation: fade-in 0.5s var(--ease-out) both;
+}
+
+.navbar__logo {
+  transition: transform var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+}
+
+.navbar__brand:hover .navbar__logo {
+  transform: rotate(-6deg) scale(1.05);
+  box-shadow: 0 0 22px var(--glow);
+}
+
+/* ---------------------------------------------------------------------
+   5. HERO
+   --------------------------------------------------------------------- */
+.hero__watermark {
+  animation: glow-breathe 6s ease-in-out infinite;
+}
+
+.hero__ticker-dot {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.hero__title span:first-child {
+  background-size: 200% auto;
+  animation: gradient-shift 6s ease-in-out infinite;
+}
+
+.hero__scroll-cue {
+  animation: scroll-cue-move 2.2s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------
+   6. CARDS — hover micro-interactions
+   --------------------------------------------------------------------- */
+.pillar-card__icon,
+.value-card,
+.metric-card,
+.mini-stat {
+  transition: transform var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) ease,
+              box-shadow var(--dur-med) ease,
+              background var(--dur-med) ease;
+}
+
+.pillar-card:hover .pillar-card__icon {
+  transform: translateY(-4px) rotate(-4deg);
+  box-shadow: 0 0 20px var(--glow);
+}
+
+.mini-stat:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.value-card::before,
+.pillar-card::before {
+  content: "";
+}
+
+/* Roadmap marker pulses gently to draw the eye down the timeline */
+.roadmap__item::before {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------
+   7. BUTTONS
+   --------------------------------------------------------------------- */
+.btn--primary {
+  background-size: 200% auto;
+  transition: transform var(--dur-fast) ease,
+              box-shadow var(--dur-fast) ease,
+              background-position var(--dur-med) ease;
+}
+
+.btn--primary:hover {
+  background-position: right center;
+}
+
+.btn--refresh__icon {
+  animation: none;
+}
+
+.btn--refresh.is-spinning .btn--refresh__icon {
+  animation: spin 0.7s linear infinite;
+}
+
+/* ---------------------------------------------------------------------
+   8. DASHBOARD
+   --------------------------------------------------------------------- */
+.dash-state {
+  animation: fade-in 0.5s var(--ease-out) both;
+}
+
+.price-panel__value {
+  background-size: 200% auto;
+  animation: gradient-shift 5s ease-in-out infinite;
+}
+
+/* Metric values briefly highlight in primary color right after a refresh
+   cycle updates their text — dashboard.js may add/remove this class per
+   metric; harmless (and simply unused) if it never does. */
+[data-metric].is-updated {
+  animation: flash-value 1s ease-out;
+}
+
+.badge--stale {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+.buysell-bar__fill {
+  transition: width 0.8s var(--ease-out);
+}
+
+.dot--buy,
+.dot--sell {
+  transition: box-shadow var(--dur-fast) ease;
+}
+
+.empty-state {
+  animation: scale-in 0.6s var(--ease-out) both;
+}
+
+.empty-state__icon {
+  animation: float-y 3.4s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------
+   9. CTA BANNER
+   --------------------------------------------------------------------- */
+.cta-banner::before {
+  animation: glow-breathe 5s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------
+   10. REDUCED MOTION
+   (app.js also feature-detects prefers-reduced-motion for particles,
+   parallax, and Lenis; this silences the ambient CSS keyframes above)
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .loader__mark,
+  .loader__bar span::after,
+  .hero__watermark,
+  .hero__ticker-dot,
+  .hero__title span:first-child,
+  .hero__scroll-cue,
+  .roadmap__item::before,
+  .price-panel__value,
+  .badge--stale,
+  .empty-state__icon,
+  .cta-banner::before {
+    animation: none !important;
+  }
+
+  [data-animate],
+  [data-hero-in] {
+    transition: none !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,313 @@
+/* =====================================================================
+   $INVENTO — The Little Elon
+   responsive.css — Breakpoint overrides
+   Base layout lives in style.css (desktop-first grids); this file
+   collapses those grids and adapts the navbar/hero/dashboard down to
+   tablet and mobile. Pairs with app.js nav toggle (.is-open) and the
+   [data-nav-menu] / [data-nav-toggle] markup in the navbar.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   BREAKPOINT: ≤1100px — large tablet / small laptop
+   --------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  :root {
+    --container-pad: 20px;
+  }
+
+  section { padding: 80px var(--container-pad); }
+
+  .navbar__menu { gap: 22px; }
+
+  .pillars__grid,
+  .values__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .dash-teaser,
+  .story__grid {
+    gap: 40px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   BREAKPOINT: ≤960px — tablet / nav collapse
+   --------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  :root {
+    --navbar-h: 72px;
+  }
+
+  /* --- Navbar: switch to mobile toggle + slide-down menu --- */
+  .navbar__toggle {
+    display: flex;
+    order: 3;
+  }
+
+  .navbar__menu {
+    position: fixed;
+    top: var(--navbar-h);
+    left: 0;
+    right: 0;
+    z-index: 999;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    margin: 0;
+    padding: 16px var(--container-pad) 28px;
+    background: rgba(10, 10, 15, 0.96);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border-bottom: 1px solid var(--border-soft);
+    transform: translateY(-12px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform var(--dur-med) var(--ease-out),
+                opacity var(--dur-med) var(--ease-out),
+                visibility var(--dur-med) var(--ease-out);
+  }
+
+  .navbar__menu.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .navbar__menu a {
+    padding: 14px 6px;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 16px;
+  }
+
+  .navbar__menu a::after { display: none; }
+  .navbar__menu a:last-of-type { border-bottom: none; }
+
+  .navbar__cta {
+    margin-top: 10px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .navbar__socials { order: 2; }
+
+  /* Toggle → close (X) icon state */
+  .navbar__toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .navbar__toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+  .navbar__toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* --- Grids collapse to 2-up --- */
+  .pillars__grid,
+  .values__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .story__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story__image { max-width: 420px; margin: 0 auto; }
+
+  .dash-teaser {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-teaser__copy { text-align: center; }
+  .dash-teaser__copy .btn { margin: 0 auto; }
+
+  .metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dashboard__row {
+    grid-template-columns: 1fr;
+  }
+
+  .panel--chart { min-height: 340px; }
+}
+
+/* ---------------------------------------------------------------------
+   BREAKPOINT: ≤768px — mobile landscape / small tablet
+   --------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  section { padding: 64px var(--container-pad); }
+
+  .section-head { margin-bottom: 40px; }
+
+  .hero {
+    padding: calc(var(--navbar-h) + 24px) var(--container-pad) 60px;
+    min-height: auto;
+    padding-bottom: 100px;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__actions .btn { width: 100%; }
+
+  .page-hero { min-height: 38vh; }
+
+  .pillars__grid,
+  .values__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-banner {
+    padding: 56px var(--container-pad);
+  }
+
+  .cta-banner__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-banner__actions .btn { width: 100%; }
+
+  .about-teaser__inner { padding: 36px 24px; }
+
+  .roadmap__item { padding-left: 36px; }
+
+  /* --- Dashboard --- */
+  .dashboard { padding-top: calc(var(--navbar-h) + 32px); }
+
+  .dashboard__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dashboard__head .btn--refresh { width: 100%; justify-content: center; }
+
+  .price-panel {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .price-panel__main { align-items: center; }
+
+  .price-panel__changes {
+    justify-content: center;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dex-links {
+    flex-direction: column;
+  }
+
+  .dex-links .btn { width: 100%; }
+
+  .tax-row { flex-direction: column; gap: 12px; }
+
+  /* --- Footer --- */
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .footer__links {
+    flex-wrap: wrap;
+    gap: 16px 24px;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   BREAKPOINT: ≤480px — mobile portrait
+   --------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  :root {
+    --navbar-h: 64px;
+  }
+
+  body { font-size: 15px; }
+
+  .navbar__inner { gap: 12px; }
+
+  .navbar__name em { display: none; }
+
+  .navbar__logo { width: 34px; height: 34px; }
+
+  .hero__title { gap: 2px; }
+
+  .hero__ticker {
+    font-size: 12px;
+    text-align: left;
+    padding: 10px 14px;
+  }
+
+  .hero__ticker span:last-child {
+    white-space: normal;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .metric-card { padding: 16px; }
+  .metric-card strong { font-size: 17px; }
+
+  .price-panel__value { font-size: 34px; }
+
+  .change-pill {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+  }
+
+  .panel { padding: 20px; }
+
+  .panel--chart { min-height: 280px; }
+  .chart-frame { min-height: 240px; }
+
+  .empty-state {
+    padding: 40px 24px;
+    margin: 24px auto;
+  }
+
+  .footer { padding-top: 40px; }
+
+  .footer__bottom { padding: 20px var(--container-pad) 24px; }
+}
+
+/* ---------------------------------------------------------------------
+   BREAKPOINT: ≥1440px — large desktop refinement
+   --------------------------------------------------------------------- */
+@media (min-width: 1440px) {
+  :root {
+    --container-max: 1320px;
+  }
+
+  .hero__content { max-width: 840px; }
+}
+
+/* ---------------------------------------------------------------------
+   ACCESSIBILITY: reduced motion
+   (app.js also feature-detects this for particles/parallax/GSAP; this
+   covers pure-CSS transitions/animations not gated in JS)
+   --------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
