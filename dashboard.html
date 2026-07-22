@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Live Dashboard | $INVENTO — The Little Elon</title>
+<meta name="description" content="Live price, market cap, liquidity, holders, and security status for $INVENTO." />
+
+<link rel="icon" id="favicon" href="assets/icons/favicon.png" />
+
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/animations.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body class="no-scroll">
+
+<!-- ============================================================ -->
+<!-- LOADING SCREEN -->
+<!-- ============================================================ -->
+<div class="loader" data-loader>
+  <div class="loader__mark" data-logo="mark"></div>
+  <div class="loader__bar"><span></span></div>
+  <p class="loader__label">Pulling live chain data…</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- NAVBAR -->
+<!-- ============================================================ -->
+<header class="navbar" data-navbar>
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__brand">
+      <span class="navbar__logo" data-logo="mark"></span>
+      <span class="navbar__name">
+        <strong data-token-symbol>$INVENTO</strong>
+        <em>The Little Elon</em>
+      </span>
+    </a>
+
+    <nav class="navbar__menu" data-nav-menu>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="#buy" class="navbar__cta">Buy $INVENTO</a>
+    </nav>
+
+    <div class="navbar__socials">
+      <a data-social="telegram" class="icon-btn icon-btn--telegram" aria-label="Telegram" target="_blank" rel="noopener noreferrer"></a>
+      <a data-social="x" class="icon-btn icon-btn--x" aria-label="X (Twitter)"></a>
+    </div>
+
+    <button class="navbar__toggle" data-nav-toggle aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main class="dashboard">
+
+  <section class="dashboard__head">
+    <div data-animate>
+      <p class="section-head__eyebrow">Live token data</p>
+      <h1><span data-token-symbol>$INVENTO</span> Dashboard</h1>
+      <p class="dashboard__updated">
+        Last updated: <span data-last-updated>—</span>
+        <span class="badge badge--stale" data-stale-badge>showing last known data</span>
+      </p>
+    </div>
+    <button class="btn btn--ghost btn--refresh" data-refresh-now data-animate>
+      <span class="btn--refresh__icon"></span> Refresh now
+    </button>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STATE: NO CONTRACT YET -->
+  <!-- ============================================================ -->
+  <section class="dash-state is-visible" data-dash-state="no-contract">
+    <div class="empty-state" data-animate>
+      <div class="empty-state__icon"></div>
+      <h2>The contract hasn't launched yet.</h2>
+      <p>The moment <code>CONTRACT_ADDRESS</code> is set in <code>js/config.js</code>,
+        this page automatically starts pulling live price, market cap,
+        liquidity, holders, and security data from DexScreener — no code
+        changes needed anywhere else.</p>
+      <a data-social="telegram" class="btn btn--primary" target="_blank" rel="noopener noreferrer">Get notified in Telegram</a>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STATE: ERROR (first load failed, nothing cached) -->
+  <!-- ============================================================ -->
+  <section class="dash-state" data-dash-state="error">
+    <div class="empty-state empty-state--error" data-animate>
+      <div class="empty-state__icon empty-state__icon--error"></div>
+      <h2>Couldn't load live data right now.</h2>
+      <p data-error-message>Unable to load live token data right now.</p>
+      <button class="btn btn--primary" data-refresh-now>Try again</button>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- STATE: DATA (full live dashboard) -->
+  <!-- ============================================================ -->
+  <section class="dash-state" data-dash-state="data">
+
+    <!-- Price block -->
+    <div class="price-panel" data-animate>
+      <div class="price-panel__main">
+        <span class="price-panel__label">Price (USD)</span>
+        <strong class="price-panel__value" data-metric="price">—</strong>
+      </div>
+      <div class="price-panel__changes">
+        <div class="change-pill">
+          <span>1h</span>
+          <strong data-metric="change1h">—</strong>
+        </div>
+        <div class="change-pill">
+          <span>6h</span>
+          <strong data-metric="change6h">—</strong>
+        </div>
+        <div class="change-pill">
+          <span>24h</span>
+          <strong data-metric="change24h">—</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key metrics grid -->
+    <div class="metrics-grid" data-animate>
+      <div class="metric-card">
+        <span>Market Cap</span>
+        <strong data-metric="marketcap">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>FDV</span>
+        <strong data-metric="fdv">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>Liquidity</span>
+        <strong data-metric="liquidity">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>Volume (24h)</span>
+        <strong data-metric="volume24h">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>Holders</span>
+        <strong data-metric="holders">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>Circulating Supply</span>
+        <strong data-metric="circulating">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>Total Supply</span>
+        <strong data-metric="totalsupply">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>Max Supply</span>
+        <strong data-metric="maxsupply">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>ATH <em>(session)</em></span>
+        <strong data-metric="ath">—</strong>
+      </div>
+      <div class="metric-card">
+        <span>ATL <em>(session)</em></span>
+        <strong data-metric="atl">—</strong>
+      </div>
+    </div>
+
+    <div class="dashboard__row">
+      <!-- Chart -->
+      <div class="panel panel--chart" data-animate>
+        <div class="panel__head">
+          <h3>Price Chart</h3>
+          <span class="panel__pair">
+            <span data-metric="pair">—</span> ·
+            <span data-metric="dex">—</span> ·
+            <span data-metric="chain">—</span>
+          </span>
+        </div>
+        <iframe class="chart-frame is-hidden" data-chart-frame title="$INVENTO price chart" loading="lazy"></iframe>
+      </div>
+
+      <!-- Buy/Sell + Tx -->
+      <div class="panel panel--buysell" data-animate>
+        <div class="panel__head">
+          <h3>Buys vs Sells (24h)</h3>
+        </div>
+        <div class="buysell-bar" data-buysell-bar>
+          <span class="buysell-bar__fill buysell-bar__fill--buys" data-buysell-fill="buys"></span>
+          <span class="buysell-bar__fill buysell-bar__fill--sells" data-buysell-fill="sells"></span>
+        </div>
+        <div class="buysell-counts">
+          <div><span class="dot dot--buy"></span> Buys <strong data-metric="buys24h">—</strong></div>
+          <div><span class="dot dot--sell"></span> Sells <strong data-metric="sells24h">—</strong></div>
+        </div>
+
+        <div class="tax-row">
+          <div><span>Buy Tax</span><strong data-metric="buytax">—</strong></div>
+          <div><span>Sell Tax</span><strong data-metric="selltax">—</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard__row">
+      <!-- Security panel -->
+      <div class="panel panel--security" data-security-panel data-animate>
+        <div class="panel__head">
+          <h3>Security Status</h3>
+        </div>
+        <ul class="security-list">
+          <li>
+            <span>Honeypot</span>
+            <strong data-security-flag="honeypot">N/A</strong>
+          </li>
+          <li>
+            <span>Open Source</span>
+            <strong data-security-flag="open-source">N/A</strong>
+          </li>
+          <li>
+            <span>Ownership Renounced</span>
+            <strong data-security-flag="renounced">N/A</strong>
+          </li>
+          <li>
+            <span>Mintable</span>
+            <strong data-security-flag="mintable">N/A</strong>
+          </li>
+        </ul>
+        <p class="panel__note" data-security-note>Security data unavailable for this chain/pair.</p>
+      </div>
+
+      <!-- DEX links -->
+      <div class="panel panel--links" data-animate id="buy">
+        <div class="panel__head">
+          <h3>Trade $INVENTO</h3>
+        </div>
+        <p>Once live, these buttons link directly to the pair on its DEX.</p>
+        <div class="dex-links">
+          <a href="#" class="btn btn--primary is-disabled" data-dex-link target="_blank" rel="noopener noreferrer">View on DexScreener</a>
+          <a href="#" class="btn btn--ghost is-disabled" data-dex-link target="_blank" rel="noopener noreferrer">Trade on DEX</a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <span class="footer__logo" data-logo="mark"></span>
+      <div>
+        <strong data-token-name>The Little Elon</strong>
+        <p data-token-tagline>Innovation is the real currency</p>
+      </div>
+    </div>
+
+    <nav class="footer__links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+
+    <div class="footer__socials">
+      <a data-social="telegram" class="icon-btn icon-btn--telegram" aria-label="Telegram" target="_blank" rel="noopener noreferrer"></a>
+      <a data-social="x" class="icon-btn icon-btn--x" aria-label="X (Twitter)"></a>
+      <a data-social="discord" class="icon-btn icon-btn--discord" aria-label="Discord" target="_blank" rel="noopener noreferrer"></a>
+      <a data-social="website" class="icon-btn icon-btn--website" aria-label="Website" target="_blank" rel="noopener noreferrer"></a>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <p>© <span data-year></span> The Little Elon ($INVENTO). Not financial advice. Verify contract addresses yourself.</p>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
